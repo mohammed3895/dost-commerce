@@ -15,8 +15,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import Link from "next/link";
+import { Home } from "lucide-react";
+import { cn } from "@/lib/utils";
+import BackToHome from "./BackToHome";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -93,6 +96,8 @@ const SignInForm = () => {
                 Sign up
               </Link>
             </h3>
+            <div className="w-3/4 mx-auto h-px bg-gray-50" />
+            <BackToHome />
           </form>
         </Form>
       </div>

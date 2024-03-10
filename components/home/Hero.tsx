@@ -17,7 +17,7 @@ const Hero = () => {
         Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </p>
       <div className="flex items-center justify-center gap-8 mt-6">
-        <Link href="/" className={cn(buttonVariants(), "px-12")}>
+        <Link href="/products" className={cn(buttonVariants(), "px-12")}>
           Discover Now
         </Link>
         <Button variant="secondary" className="px-12">

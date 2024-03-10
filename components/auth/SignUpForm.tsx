@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import BackToHome from "./BackToHome";
 
 const formSchema = z.object({
   firstname: z.string().email(),
@@ -143,6 +144,8 @@ const SignUpForm = () => {
                 Sign in
               </Link>
             </h3>
+            <div className="w-3/4 mx-auto h-px bg-gray-50" />
+            <BackToHome />
           </form>
         </Form>
       </div>
