@@ -50,15 +50,15 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-28 gap-6">
+    <div className="w-full h-full flex flex-col items-center justify-center p-4 md:p-8  bg-[url(https://images.unsplash.com/photo-1709480955041-274cfe798bb0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] !lg:bg-white lg:bg-transparent lg:bg-none">
       <h1 className="text-4xl font-bold tracking-tight text-zinc-900">
         Dost<span className="text-primary">Commerce</span>
       </h1>
-      <div className="w-full  px-28 mt-10 flex flex-col items-start justify-center">
+      <div className="w-full max-w-2xl px-4  lg:px-16 mt-10 flex flex-col items-start justify-center">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 w-full shadow-lg p-8 rounded-lg"
+            className="space-y-6 w-full shadow-lg p-8 rounded-lg bg-white"
           >
             <h1 className="text-xl font-medium tracking-tight text-primary mb-4">
               Create new account
@@ -71,7 +71,7 @@ const SignUpForm = () => {
                   <FormItem className="w-full">
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Ex: John" {...field} />
+                      <Input type="text" placeholder="Ex: John" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -85,7 +85,7 @@ const SignUpForm = () => {
                   <FormItem className="w-full">
                     <FormLabel>Last Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Ex: Doe" {...field} />
+                      <Input type="text" placeholder="Ex: Doe" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -100,7 +100,11 @@ const SignUpForm = () => {
                 <FormItem className="w-full">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ex: john@example.com" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="Ex: john@example.com"
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -114,7 +118,7 @@ const SignUpForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="********" {...field} />
+                    <Input type="password" placeholder="********" {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -128,7 +132,7 @@ const SignUpForm = () => {
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="********" {...field} />
+                    <Input type="password" placeholder="********" {...field} />
                   </FormControl>
 
                   <FormMessage />

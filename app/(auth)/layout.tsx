@@ -14,7 +14,9 @@ const inter = Inter({
 });
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className={cn(inter.variable, "min-h-screen, wfull")}>
+    <main
+      className={cn(inter.variable, "min-h-screen, w-full flex-grow flex-1")}
+    >
       {children}
     </main>
   );

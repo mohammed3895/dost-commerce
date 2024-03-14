@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <SessionProvider>
         <body className={inter.variable}>
-          <main className="w-full min-h-screen relative">
+          <main className="w-full min-h-screen relative antialiased">
             <Navbar />
             {children}
           </main>

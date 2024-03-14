@@ -36,19 +36,48 @@ const SignInForm = () => {
 
   // submit handler
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await prisma.user.findUnique({ where: { email: values.email } });
+    try {
+      const user = await prisma.user.findUnique({
+        where: { email: values.email },
+      });
+
+      if (!user) {
+        form.setError("email", {
+          type: "manual",
+          message: "Email not found.",
+        });
+        return;
+      }
+
+      if (user.password !== values.password) {
+        form.setError("password", {
+          type: "value",
+          message: "Password is incorrect.",
+        });
+        return;
+      }
+
+      localStorage.setItem("user", JSON.stringify(user));
+      return user;
+    } catch (error) {
+      console.error(error);
+      form.setError("email", {
+        type: "manual",
+        message: "An error occurred while signing in.",
+      });
+    }
   }
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-28">
+    <div className="w-full h-full flex flex-col items-center justify-center p-4 md:p-8  bg-[url(https://images.unsplash.com/photo-1709480955041-274cfe798bb0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] !lg:bg-white lg:bg-transparent lg:bg-none">
       <h1 className="text-4xl font-bold tracking-tight text-zinc-900">
         Dost<span className="text-primary">Commerce</span>
       </h1>
-      <div className="w-full  px-28 mt-10 flex flex-col items-start justify-center">
+      <div className="w-full max-w-2xl px-4  lg:px-16 mt-10 flex flex-col items-start justify-center">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 w-full shadow-lg p-8 rounded-lg"
+            className="space-y-6 w-full shadow-lg p-8 rounded-lg bg-white"
           >
             <h1 className="text-xl font-medium tracking-tight text-primary">
               Signin to your account
@@ -60,7 +89,11 @@ const SignInForm = () => {
                 <FormItem className="w-full">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ex: john@example.com" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="Ex: john@example.com"
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -74,7 +107,7 @@ const SignInForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="********" {...field} />
+                    <Input type="password" placeholder="********" {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -84,7 +117,7 @@ const SignInForm = () => {
             <Button type="submit" className="w-full">
               Submit
             </Button>
-            <h3 className="text-center text-muted-foreground w-full">
+            <h3 className="text-center text-muted-foreground w-full text-sm lg:text-base">
               Don&apos;t have an account?{" "}
               <Link href="/sign-up" className="text-primary font-semibold">
                 Sign up
