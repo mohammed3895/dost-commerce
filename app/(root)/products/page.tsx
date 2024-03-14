@@ -11,10 +11,16 @@ export const metadata: Metadata = {
 const ProducsPage = () => {
   return (
     <>
-      <BreadCrumbs />
+      <BreadCrumbs lastChild="products" />
       <div className="bg-white flex items-start justify-between gap-8 p-8">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 w-full">
-          <h2 className="sr-only">Products</h2>
+        <div className="mx-auto max-w-2xl px-4 py-24 sm:px-6 lg:py-16 lg:max-w-7xl lg:px-8 w-full">
+          <h1 className="text-center text-2xl capitalize font-bold tracking-tight text-zinc-900">
+            Browse our Products
+          </h1>
+          <p className="mt-6 mb-8 text-base text-gray-500 dark:text-gray-400 text-center">
+            Find the perfect product for your needs. You can filter by category,
+            price and more.
+          </p>
           <ProductsFlitering />
           <ProductQuery />
         </div>

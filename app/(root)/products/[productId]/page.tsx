@@ -2,6 +2,7 @@ import React from "react";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import BreadCrumbs from "@/components/shared/BreadCrumbs";
 
 interface Props {
   params: {
@@ -17,8 +18,9 @@ const ProductDetails = async ({ params }: Props) => {
 
   return (
     <div>
-      <div className="dark:bg-gray-800 py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="py-6">
+        <BreadCrumbs lastChild={product?.name || undefined} />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="flex flex-col md:flex-row -mx-4">
             <div className="md:flex-1 px-4">
               <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">

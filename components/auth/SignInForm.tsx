@@ -1,11 +1,8 @@
 "use client";
-import { SignInFormSchema } from "@/constants/form";
 import React from "react";
-import CustomInput from "../CustomInput";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,11 +12,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import Link from "next/link";
-import { Home } from "lucide-react";
-import { cn } from "@/lib/utils";
 import BackToHome from "./BackToHome";
+import prisma from "@/lib/prisma";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -38,11 +34,9 @@ const SignInForm = () => {
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  // submit handler
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await prisma.user.findUnique({ where: { email: values.email } });
   }
 
   return (

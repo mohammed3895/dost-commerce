@@ -14,7 +14,6 @@ import { ChevronRight } from "lucide-react";
 const BreadCrumbs = ({ lastChild }: { lastChild?: string }) => {
   const pathname = usePathname();
   const pathArr = pathname.split("/");
-  const last = pathArr.slice(-1);
 
   return (
     <Breadcrumb className="px-20 py-2 w-full">
@@ -23,21 +22,25 @@ const BreadCrumbs = ({ lastChild }: { lastChild?: string }) => {
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
 
-        {pathArr.slice(1).map((item, i) => (
-          <>
-            <BreadcrumbSeparator>
-              <ChevronRight size={12} className="text-muted-foreground" />
-            </BreadcrumbSeparator>
-            <BreadcrumbItem
-              key={i}
-              className="px-4 py-2 bg-gray-50 text-muted-foreground text-sm rounded-lg"
-            >
-              <BreadcrumbLink href={`/${item}`}>
-                {lastChild || item}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </>
-        ))}
+        {pathArr.slice(1).map((item, i) => {
+          const last = pathArr[pathArr.length - 1] === item;
+
+          return (
+            <>
+              <BreadcrumbSeparator>
+                <div className="text-muted-foreground w-1 h-1 rounded-full bg-muted-foreground" />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem
+                key={i}
+                className="px-4 py-2 bg-gray-50 text-muted-foreground text-sm rounded-lg"
+              >
+                <BreadcrumbLink href={`/${item}`}>
+                  {last ? lastChild : item}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </>
+          );
+        })}
       </BreadcrumbList>
     </Breadcrumb>
   );
