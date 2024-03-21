@@ -16,9 +16,9 @@ const BreadCrumbs = ({ lastChild }: { lastChild?: string }) => {
   const pathArr = pathname.split("/");
 
   return (
-    <Breadcrumb className="px-20 py-2 w-full">
+    <Breadcrumb className="px-8 py-2 w-full">
       <BreadcrumbList>
-        <BreadcrumbItem className="px-4 py-2 bg-gray-50 text-muted-foreground text-sm rounded-lg">
+        <BreadcrumbItem className="px-4 py-2 bg-gray-50 text-zinc-900 text-sm rounded-md">
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
 
@@ -32,7 +32,7 @@ const BreadCrumbs = ({ lastChild }: { lastChild?: string }) => {
               </BreadcrumbSeparator>
               <BreadcrumbItem
                 key={i}
-                className="px-4 py-2 bg-gray-50 text-muted-foreground text-sm rounded-lg"
+                className="p-2 bg-gray-50 text-zinc-900 text-xs rounded-md"
               >
                 <BreadcrumbLink href={`/${item}`}>
                   {last ? lastChild : item}

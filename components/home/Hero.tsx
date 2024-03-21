@@ -6,7 +6,7 @@ import Categories from "./Categories";
 
 const Hero = () => {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-8">
+    <div className="w-full h-full flex flex-col items-center justify-center p-8 mt-6">
       <h1 className="text-2xl md:text-6xl font-bold text-zinc-900 leading-tight text-center">
         Welcome to our brand new <br />
         Dost
@@ -25,7 +25,7 @@ const Hero = () => {
         </Button>
       </div>
       <div className="w-1/2 h-px bg-gray-100  my-16" />
-      <Categories />
+      {/* <Categories /> */}
     </div>
   );
 };

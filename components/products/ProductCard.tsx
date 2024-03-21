@@ -10,8 +10,11 @@ interface ProductProps {
 
 const ProductCard = ({ product, isVisible }: ProductProps) => {
   return (
-    <Link href={`/products/${product.id}`} className="group">
-      <div className="aspect-h-1 aspect-w-1 w-full h-80 overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7 animate-in fade-in-25">
+    <Link
+      href={`/products/${product.id}`}
+      className="group col-span-1 animate-in fade-in duration-1000"
+    >
+      <div className="w-full h-80 overflow-hidden rounded-lg bg-gray-200 ">
         <Image
           src={product.imageUrl}
           alt={product.name}

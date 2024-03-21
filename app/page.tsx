@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <Hero />
       <Stats />
-      <div className="flex flex-col items-center justify-center py-16 px-12 gap-6 mt-12">
+      <div className="flex flex-col items-center justify-center py-16 px-6 md:px-12 gap-6 mt-12">
         <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl mb-1">
           Featured Products
         </h1>

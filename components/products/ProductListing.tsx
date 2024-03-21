@@ -15,7 +15,7 @@ const ProductListing = ({ product, i }: QueryProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, i * 75);
+    }, i * 100);
 
     return () => clearTimeout(timer);
   }, [i]);

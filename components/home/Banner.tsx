@@ -6,7 +6,7 @@ import { buttonVariants } from "../ui/button";
 
 const Banner = () => {
   return (
-    <section className="w-full h-full my-60">
+    <section className="w-full h-full my-20">
       <div className="mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="bg-primary p-8 md:p-12 lg:px-16 lg:py-24">

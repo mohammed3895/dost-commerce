@@ -1,9 +1,9 @@
-import "../globals.css";
 import { Inter } from "next/font/google";
-import SessionProvider from "@/components/SessionProvider";
 import Navbar from "@/components/shared/Navbar";
-import { Toaster } from "sonner";
 import Footer from "@/components/shared/Footer";
+import Provider from "@/components/shared/Provider";
+import { Toaster } from "@/components/ui/toaster";
+import "./globals.css";
 
 export const metadata = {
   metadataBase: new URL("https://postgres-prisma.vercel.app"),
@@ -23,16 +23,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <SessionProvider>
+      <Provider>
         <body className={inter.variable}>
           <main className="w-full min-h-screen relative antialiased">
             <Navbar />
             {children}
           </main>
           <Footer />
-          <Toaster richColors={true} />
+          <Toaster />
         </body>
-      </SessionProvider>
+      </Provider>
     </html>
   );
 }

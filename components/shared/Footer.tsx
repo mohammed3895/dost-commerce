@@ -11,12 +11,12 @@ const Footer = () => {
           </Link>
         </div>
 
-        <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-muted-foreground">
+        <p className="mx-auto text-sm md:text-base mt-6 max-w-md text-center leading-relaxed text-muted-foreground">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
           consequuntur amet culpa cum itaque neque.
         </p>
 
-        <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
+        <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12 text-sm md:text-base">
           <li>
             <a
               className="text-gray-700 transition hover:text-gray-700/75"
@@ -77,7 +77,7 @@ const Footer = () => {
             </a>
           </li>
         </ul>
-        <div className="w-1/2 mt-8 py-8 border-t mx-auto">
+        <div className="w-2/3 text-xs md:text-base  mt-8 py-8 border-t mx-auto">
           <p className="text-base text-center text-muted-foreground">
             &copy; 2024 -{" "}
             <Link

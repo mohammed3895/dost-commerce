@@ -1,6 +1,7 @@
 import React from "react";
 import prisma from "@/lib/prisma";
 import ProductListing from "./ProductListing";
+import { cn } from "@/lib/utils";
 
 interface QueryProps {
   limit?: number;
@@ -14,11 +15,19 @@ const ProductQuery = async ({ limit, category }: QueryProps) => {
     orderBy: { createdAt: "desc" },
   });
 
+  const pLength = products.length;
   return (
-    <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 w-full px-8">
-      {products.map((product, i) => (
-        <ProductListing key={i} product={product} i={i} />
-      ))}
+    <div className="w-full flex items-center justify-center mx-auto">
+      <div
+        className={cn(
+          { "grid lg:grid-cols-3": pLength > 2 },
+          "grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2  xl:gap-x-8 w-full max-w-7xl items-center justify-center"
+        )}
+      >
+        {products.map((product, i) => (
+          <ProductListing key={i} product={product} i={i} />
+        ))}
+      </div>
     </div>
   );
 };
