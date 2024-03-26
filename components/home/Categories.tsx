@@ -25,7 +25,7 @@ const categoryItems = [
 
 const Categories = () => {
   return (
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center 0">
       <h1 className="text-xl font-semibold text-zinc-900 mb-6">
         Browse Categories
       </h1>

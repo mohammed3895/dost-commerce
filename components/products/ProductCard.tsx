@@ -18,7 +18,7 @@ const ProductCard = ({ product, isVisible }: ProductProps) => {
         <Image
           src={product.imageUrl}
           alt={product.name}
-          height={600}
+          height={400}
           width={400}
           className="h-full w-full object-cover object-center group-hover:opacity-75"
         />

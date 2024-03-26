@@ -15,7 +15,11 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import BackToHome from "./BackToHome";
-import prisma from "@/lib/prisma";
+import { trpc } from "@/app/_trpc/client";
+import { singinformSchema } from "@/lib/validations";
+import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -26,39 +30,40 @@ const formSchema = z.object({
 });
 
 const SignInForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof singinformSchema>>({
+    resolver: zodResolver(singinformSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
+  const { mutate, isPending, data } = trpc.signIn.useMutation({});
 
   // submit handler
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof singinformSchema>) {
     try {
-      const user = await prisma.user.findUnique({
-        where: { email: values.email },
+      mutate(values, {
+        onSuccess: () => {
+          toast({
+            title: "Signed in",
+            description: "You are now signed in, redirecting...",
+            variant: "success",
+          });
+
+          router.push("/");
+        },
+
+        onError: (e) => {
+          toast({
+            title: "Failed to sign in",
+            description: e.message,
+            variant: "destructive",
+          });
+        },
       });
-
-      if (!user) {
-        form.setError("email", {
-          type: "manual",
-          message: "Email not found.",
-        });
-        return;
-      }
-
-      if (user.password !== values.password) {
-        form.setError("password", {
-          type: "value",
-          message: "Password is incorrect.",
-        });
-        return;
-      }
-
-      localStorage.setItem("user", JSON.stringify(user));
-      return user;
     } catch (error) {
       console.error(error);
       form.setError("email", {
@@ -115,7 +120,13 @@ const SignInForm = () => {
               )}
             />
             <Button type="submit" className="w-full">
-              Submit
+              {isPending ? (
+                <span className="flex items-center justify-center gap-3">
+                  <Loader2 className="w-4 h-4 animate-spin" /> Signing in
+                </span>
+              ) : (
+                "Sign in"
+              )}
             </Button>
             <h3 className="text-center text-muted-foreground w-full text-sm lg:text-base">
               Don&apos;t have an account?{" "}

@@ -3,7 +3,7 @@ import ProductQuery from "@/components/products/ProductQuery";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "DostCommerce | Products",
+  title: "Products",
 };
 
 const ProducsPage = () => {

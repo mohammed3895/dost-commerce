@@ -1,48 +1,43 @@
+"use client";
 import { cn } from "@/lib/utils";
-import React from "react";
-import { buttonVariants } from "../ui/button";
-import {
-  RegisterLink,
-  LoginLink,
-  getKindeServerSession,
-  LogoutLink,
-} from "@kinde-oss/kinde-auth-nextjs/server";
+import React, { useState } from "react";
+import { Button, buttonVariants } from "../ui/button";
+import Link from "next/link";
+import { trpc } from "@/app/_trpc/client";
+import Cart from "../cart/Cart";
 
-const NavItems = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+const NavItems = () => {
+  const [user, setUser] = useState<{}>({});
+
+  const { data: dbUser } = trpc.getUser.useMutation({
+    onSuccess: () => {
+      const userObj = dbUser?.dbUser;
+      setUser({ userObj });
+    },
+  });
 
   return (
     <div className="hidden lg:flex items-center gap-4">
       {user !== null ? (
-        <div>
-          <h4 className="text-lg capitalize">
-            {user.given_name}{" "}
-            <span className="text-xl uppercase font-normal">
-              {user.family_name![0] ?? ""}.
-            </span>
-          </h4>
-          {/* <LogoutLink
-            postLogoutRedirectURL="/"
-            className={buttonVariants({ variant: "ghost" })}
-          >
-            SignOut
-          </LogoutLink> */}
+        <div className="flex gap-1.5">
+          <Cart />
+          <Button variant="secondary">Logout</Button>
         </div>
       ) : (
         <div>
-          <LoginLink className={cn(buttonVariants(), "px-8")}>
+          <Link href="/sign-in" className={cn(buttonVariants(), "px-8")}>
             Sign in
-          </LoginLink>
+          </Link>
 
-          <RegisterLink
+          <Link
+            href="/sign-up"
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "text-base text-zinc-900 capitalize font-medium ml-4"
             )}
           >
             Sign up
-          </RegisterLink>
+          </Link>
         </div>
       )}
     </div>

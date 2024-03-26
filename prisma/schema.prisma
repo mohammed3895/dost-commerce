@@ -57,7 +57,7 @@ model VerificationToken {
 }
 
 model Product {
-  id          Int        @id @unique @default(autoincrement())
+  id          String     @id @default(cuid())
   name        String
   description String
   category    String
@@ -74,7 +74,7 @@ model Product {
 }
 
 model Cart {
-  id Int @id @unique @default(autoincrement())
+  id String @id @unique @default(cuid())
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -87,12 +87,12 @@ model Cart {
 }
 
 model CartItem {
-  id        Int     @id @default(autoincrement())
+  id        String  @id @default(cuid())
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
+  productId String
   quantity  Int
   cart      Cart    @relation(fields: [cartId], references: [id])
-  cartId    Int
+  cartId    String
 
   @@index([productId])
   @@index([cartId])

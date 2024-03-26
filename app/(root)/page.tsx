@@ -19,15 +19,17 @@ export default function Home() {
           Discover new products that will take your taste buds on a journey.
         </p>
         <FeaturedProducts />
-        <Link
-          href="/products"
-          className={cn(
-            buttonVariants({ variant: "secondary" }),
-            "w-full md:w-60"
-          )}
-        >
-          Browse more
-        </Link>
+        <div className="w-full px-0 xl:px-32 flex lg:items-start justify-center items-center lg:justify-start text-left mt-6 mb-20">
+          <Link
+            href="/products"
+            className={cn(
+              buttonVariants({ variant: "link" }),
+              "text-muted-foreground"
+            )}
+          >
+            Browse more
+          </Link>
+        </div>
       </div>
       <Banner />
     </>

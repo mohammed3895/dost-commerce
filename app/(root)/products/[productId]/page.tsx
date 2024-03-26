@@ -1,22 +1,37 @@
+"use client";
 import React from "react";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import type { Metadata, ResolvingMetadata } from "next";
+import AddToCart from "@/components/cart/AddToCart";
+import { Prisma } from "@prisma/client";
+import { trpc } from "@/app/_trpc/client";
 
-interface Props {
-  params: {
-    productId: number | undefined;
-  };
-}
+type Props = {
+  params: { productId: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
-const ProductDetails = async ({ params }: Props) => {
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   // read route params
+//   const product = await prisma.product.findFirst({
+//     where: { id: params.productId },
+//   });
+
+//   return {
+//     title: product?.name,
+//   };
+// }
+
+const ProductDetails = ({ params }: Props) => {
   const { productId } = params;
-  const product = await prisma.product.findUnique({
-    where: { id: Number(productId) },
+  const { data: product } = trpc.getProduct.useQuery({
+    productId: params.productId,
   });
 
   return (
-    <div>
+    <div className="w-full h-full">
       <div className="py-6">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="flex flex-col md:flex-row -mx-4 gap-16">
@@ -26,13 +41,13 @@ const ProductDetails = async ({ params }: Props) => {
                   width={600}
                   height={600}
                   className="w-full h-full object-cover"
-                  src={product!.imageUrl}
+                  src={product?.imageUrl!}
                   alt="Product Image"
                 />
               </div>
               <div className="flex -mx-2 mb-4">
                 <div className="w-1/2 px-2">
-                  <Button className="w-full">Add to Cart</Button>
+                  <AddToCart product={product as any} />
                 </div>
                 <div className="w-1/2 px-2">
                   <Button className="w-full" variant="secondary">
@@ -67,7 +82,7 @@ const ProductDetails = async ({ params }: Props) => {
                 <span className="font-bold text-gray-700 dark:text-gray-300">
                   Product Description:
                 </span>
-                <p className="text-gray-600 dark:text-gray-300 text-[16px] mt-2 truncate">
+                <p className="text-gray-600 dark:text-gray-300 text-[16px] mt-2 w-3/4">
                   {product?.description}
                 </p>
               </div>

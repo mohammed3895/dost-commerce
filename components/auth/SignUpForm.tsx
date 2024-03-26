@@ -15,22 +15,14 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import BackToHome from "./BackToHome";
-
-const formSchema = z.object({
-  firstname: z.string().email(),
-  lastname: z.string().email(),
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters" })
-    .max(32),
-  confirmpassword: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters" })
-    .max(32),
-});
+import { formSchema } from "@/lib/validations";
+import { trpc } from "@/app/_trpc/client";
+import { Loader2 } from "lucide-react";
+import { useToast } from "../ui/use-toast";
 
 const SignUpForm = () => {
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,11 +34,35 @@ const SignUpForm = () => {
     },
   });
 
+  const { mutate, isPending } = trpc.createUser.useMutation({});
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    mutate(values, {
+      onSuccess: ({ success }) => {
+        if (success)
+          toast({
+            title: "User Created Successfully",
+            description: `Welcome ${values.firstname}! You can now log in with your new account.`,
+            variant: "success",
+          });
+      },
+      onError: (e) => {
+        if (e.data?.code === "CONFLICT") {
+          toast({
+            title: "This User  Already Exists.",
+            description: "Please try logging in instead.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "An error occurred",
+            description: e.message ?? e.toString(),
+            variant: "destructive",
+          });
+        }
+      },
+    });
   }
 
   return (
@@ -139,8 +155,18 @@ const SignUpForm = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
-              Submit
+            <Button
+              type="submit"
+              className="w-full flex items-center justify-center gap-3"
+            >
+              {isPending ? (
+                <span className="flex items-center justify-center gap-3">
+                  <Loader2 className="w-4 h-4 animate-spin mr-2" /> creating
+                  user
+                </span>
+              ) : (
+                "Create"
+              )}
             </Button>
             <h3 className="text-center text-muted-foreground w-full">
               Already have an account?{" "}

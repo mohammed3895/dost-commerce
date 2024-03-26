@@ -4,10 +4,12 @@ import Footer from "@/components/shared/Footer";
 import Provider from "@/components/shared/Provider";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL("https://postgres-prisma.vercel.app"),
-  title: "DostCommerce | Home",
+  title: "DostCommerce",
+  description: "Buy, sell or trade anything you want",
 };
 
 const inter = Inter({
@@ -26,10 +28,8 @@ export default function RootLayout({
       <Provider>
         <body className={inter.variable}>
           <main className="w-full min-h-screen relative antialiased">
-            <Navbar />
             {children}
           </main>
-          <Footer />
           <Toaster />
         </body>
       </Provider>
